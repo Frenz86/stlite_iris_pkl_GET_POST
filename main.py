@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 classes = {
     0: 'setosa',
     1: 'versicolor',
-    2: 'verginica'
+    2: 'virginica'
 }
 
 class Feature_type(BaseModel):
