@@ -34,7 +34,7 @@ petal_length = st.slider('Select petal_length', 0.0, 10.0,4.0,0.1)
 petal_width  = st.slider('Select petal_width', 0.0, 10.0,2.0,0.1)
 
 
-base = "http://127.0.0.1:8000/predict"
+base = "https://stliteiris.herokuapp.com/predict"
 url = f"?feature1={sepal_length}&feature2={sepal_width}&feature3={petal_length}&feature4={petal_width}"
 base_url = base + url
 
