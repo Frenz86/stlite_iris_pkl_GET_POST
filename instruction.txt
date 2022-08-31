@@ -1,0 +1,5 @@
+# Shell windows
+#per le chiamate GET
+http -v GET "https://stliteiris.herokuapp.com/predict?feature1=10.6&feature2=3.16&feature3=2.4"
+http -v GET https://stliteiris.herokuapp.com/predict feature1=10.6 feature2=3.16 feature3=2.4
+# nel browser https://stliteiris.herokuapp.com/predict?feature1=10.6&feature2=3.16&feature3=2.4
