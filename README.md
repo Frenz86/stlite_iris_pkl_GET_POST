@@ -1,1 +1,12 @@
 # stlite_iris_pkl_GET_POST
+
+
+# Shell windows
+
+#per le chiamate GET:
+http -v GET "https://stliteiris.herokuapp.com/predict?feature1=1.6&feature2=3.1&feature3=2.4&feature4=3"
+http -v GET https://stliteiris.herokuapp.com/predict feature1=10.6 feature2=3.16 feature3=2.4 feature4=3
+nel browser https://stliteiris.herokuapp.com/predict?feature1=10.6&feature2=3.16&feature3=2.4&feature4=3
+
+#per le chiamate POST:
+http -v POST https://stliteiris.herokuapp.com/predict body="{"feature1": 3,"feature2": 3,"feature3": 3,"feature4": 3}"

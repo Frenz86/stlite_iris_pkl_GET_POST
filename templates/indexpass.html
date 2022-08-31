@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Machine Learning App</title>
+  <meta name="description" content="Machine Learning App">
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.1.0/build/stlite.js"></script>
+  <script>
+    stlite.mount({
+      requirements: ["matplotlib"],
+      entrypoint: "webapp.py",
+      files: {
+        "webapp.py": `
+
+import io
+import streamlit as st
+import numpy as np
+from matplotlib import pyplot as plt
+import json 
+
+def is_authenticated(password):
+    return password == "admin"
+
+
+def generate_login_block():
+    block1 = st.empty()
+    block2 = st.empty()
+
+    return block1, block2
+
+
+def clean_blocks(blocks):
+    for block in blocks:
+        block.empty()
+
+
+def login(blocks):
+    blocks[0].markdown("""
+            <style>
+                input {
+                    -webkit-text-security disc;
+                }
+            <style>
+        """, unsafe_allow_html=True)
+
+    return blocks[1].text_input('Inserire la Password')
+
+login_blocks = generate_login_block()
+password = login(login_blocks)
+
+if is_authenticated(password):
+    clean_blocks(login_blocks)
+    st.title('IRIS DATASET')
+    img = '<img src="https://www.embedded-robotics.com/wp-content/uploads/2022/01/Iris-Dataset-Classification.png" width="100%" >'
+    st.markdown(img, unsafe_allow_html=True)
+    st.markdown('<p>', unsafe_allow_html=True)
+
+    sepal_length = st.slider('Select sepal_length', 0.0, 10.0,3.0,0.1)
+    sepal_width  = st.slider('Select sepal_width', 0.0, 10.0,2.0,0.1)
+    petal_length = st.slider('Select petal_length', 0.0, 10.0,4.0,0.1)
+    petal_width  = st.slider('Select petal_width', 0.0, 10.0,2.0,0.1)
+
+
+    base = "https://stliteiris.herokuapp.com/predict"
+    url = f"?feature1={sepal_length}&feature2={sepal_width}&feature3={petal_length}&feature4={petal_width}"
+    base_url = base + url
+
+    #########################  request GET ###################
+    from js import XMLHttpRequest
+    req_get = XMLHttpRequest.new()
+    req_get.open("GET", base_url, False)
+    req_get.send(None)
+    response_get = json.loads(req_get.response)
+    #########################  request POST ###################
+    data = {"feature1":sepal_length,
+            "feature2":sepal_width,
+            "feature3":petal_length,
+            "feature4":petal_width,
+          }
+
+    from js import XMLHttpRequest
+    req_post = XMLHttpRequest.new()
+    req_post.open("POST", base, False)
+    req_post.setRequestHeader("Content-type", "application/json");
+    req_post.send(json.dumps(data))
+    response_post = json.loads(req_post.response)
+    ###########################################################
+
+    if st.button("Get the result GET"):
+        st.write(f"The final prediction is : {response_get}")
+        print(response_get)
+
+    if st.button("Get the result POST"):
+        st.write(f"The final prediction is : {response_post}")
+        print(response_post)
+
+
+    ######################### HIDE FOOTER #######################
+    ## hide footer
+    hide_st_style = """
+                <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+                </style>
+                """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
+
+elif password:
+    st.info("Please enter a valid password")
+
+
+
+`
+      },
+    },
+    document.getElementById("root"))
+  </script>
+</body>
+</html>

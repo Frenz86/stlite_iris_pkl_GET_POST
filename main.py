@@ -35,6 +35,9 @@ def load_model():
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/pass")
+def home(request: Request):
+    return templates.TemplateResponse("indexpass.html", {"request": request})
 
 @app.get("/predict", response_class=HTMLResponse)
 async def predict_get(data: Feature_type= Depends()):              # depends() input nelle celle
