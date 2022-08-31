@@ -25,8 +25,9 @@ import json
 
 st.title('IRIS DATASET')
 
-img = '<img src="https://www.embedded-robotics.com/wp-content/uploads/2022/01/Iris-Dataset-Classification.png" width="750" >'
+img = '<img src="https://www.embedded-robotics.com/wp-content/uploads/2022/01/Iris-Dataset-Classification.png" width="100%" >'
 st.markdown(img, unsafe_allow_html=True)
+st.markdown('<p>', unsafe_allow_html=True)
 
 sepal_length = st.slider('Select sepal_length', 0.0, 10.0,3.0,0.1)
 sepal_width  = st.slider('Select sepal_width', 0.0, 10.0,2.0,0.1)
